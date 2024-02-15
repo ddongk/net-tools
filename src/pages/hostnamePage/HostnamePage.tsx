@@ -80,7 +80,8 @@ const HostnamePage = () => {
         </>
 
     );
-    // Submit 버튼 클릭 시 재시작
+    // Submit 버튼 클릭 시 재시작할 건지 묻기
+    // hostname 적용하려면 재시작 해야함
 }
 
 export default HostnamePage;

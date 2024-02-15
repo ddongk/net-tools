@@ -1,44 +1,61 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import NavigateButton from "../../components/button/NavigateButton";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Button } from "@mui/material";
 
+interface PortProxyData {
+    id: number;
+    CO: number;
+    IDEX_MVL: number;
+    NO2: number;
+    O3: number;
+}
 const PortproxyPage = () => {
 
-    const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 40 },
-        { field: 'firstName', headerName: 'First name', width: 90 },
-        { field: 'lastName', headerName: 'Last name', width: 90 },
-        { field: 'age', headerName: 'Age', type: 'number', width: 90},
-        { field: 'fullName', headerName: 'Full name', sortable: false, width: 50 }
-    ];
+    const [portProxy, setPortProxy] = useState<PortProxyData[]>([]);
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    useEffect(() => {
+        fetchPortProxy();
+    }, []);
+
+    const fetchPortProxy = async () => {
+        try {
+            const response = await fetch('http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/RealtimeCityAir/1/99');
+            const data = await response.json();
+            const dataWithID = data.RealtimeCityAir.row.map((row: PortProxyData, index: number) => ({
+                ...row,
+                id: index + 1
+            }));
+            setPortProxy(dataWithID);
+        } catch (error){
+            console.error('에러: ', error);
+            //호출 실패 시 알림 문구창 뜨게도 하면 좋을 듯
+        } finally {
+            // 로딩
+            // 호출 성공 시 알림 문구창 뜨게도 하면 좋을 듯
+        }
+    };
+
+    const columns: GridColDef[] = [
+        { field: 'CO', headerName: 'ID', width: 40 },
+        { field: 'IDEX_MVL', headerName: 'First name', width: 90 },
+        { field: 'NO2', headerName: 'Last name', width: 90 },
+        { field: 'O3', headerName: 'Age', type: 'number', width: 90},
     ];
 
     return (
         <>
             <h1>portproxy</h1>
             <div>퐅픍싀</div>
-            <NavigateButton variant="outlined" buttonText="modify" path="/components/portproxyPage/ModifyPortproxyPage"/>
+            <Button variant="outlined">ADD</Button>
+            <Button variant="outlined" color="error">
+                DELETE
+            </Button>
             <DataGrid
-                rows={rows}
+                rows={portProxy}
                 columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                    },
-                }}
-                pageSizeOptions={[1, 10]}
-                checkboxSelection
+                hideFooterPagination={true}
+                checkboxSelection //체크 후 삭제 버튼 클릭 이벤트 만들 예정
             />
         </>
     );
