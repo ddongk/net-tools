@@ -57,27 +57,55 @@ const HostnamePage = () => {
     //아래와 같은 가짜 데이터 호출 사이트를 사용하여 테스트하기
 
 
-
-
     return (
 
-        <>
-            <h1>hostname</h1>
-
-            <div className="boxflex">
-                <div>현재 호스트 네임</div>
-                {loading ? (
-                    <LoadingButton loading variant="outlined" className="inputSize"/>
+        <div className="pageFrame">
+            <div>
+                {loading ? (<>
+                    <div>
+                    <img src="/images/logo-unipost-800x400.png" style={{ width: '130px', height: 'auto' }}/>
+                    </div>
+                        중앙 맞춰야 함
+                    <div>
+                        <CircularProgress />
+                    </div>
+                    </>
                 ) : (
-                    <input type="text" className="inputSize" value={hostName}/>
+                    <>
+                        <div className="title">
+                            hostname
+                        </div>
+                        <div className="margin5px">
+                            <TextField
+                                id="outlined-read-only-input"
+                                className="textfield-type1"
+                                label="Current hostname"
+                                defaultValue={hostName}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                sx={{ width: 500 }}
+                            />
+                        </div>
+                        <div className="margin5px">
+                            <TextField
+                                required
+                                id="outlined-required"
+                                className="textfield-type1"
+                                label="Set the new hostname"
+                                placeholder="Enter the hostname"
+                                sx={{ width: 500 }}
+                            />
+                        </div>
+                        <div className="submit-Button">
+                            <Button variant="contained" onClick={openModal} sx={{width: 500, height: 40}}>Submit</Button>
+                        </div>
+                    </>
                 )}
+
             </div>
-            <div className="boxflex">
-            <div>변경할 호스트 네임</div>
-            <TextField id="outlined-basic" label="Change IP" variant="outlined" className="inputSize"/>
-            <Button variant="outlined" onClick={openModal}>Submit</Button>
-            </div>
-        </>
+
+        </div>
 
     );
     // Submit 버튼 클릭 시 재시작할 건지 묻기

@@ -16,3 +16,22 @@
   background-color: #3f51b5; /* 변경할 색상 */
   color: white; /* 변경할 텍스트 색상 */
 }
+.pageFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid 1px black;
+  width: 700px;
+  /*height: 350px;*/
+  /*overflow: auto;*/
+}
+
+.title {
+  color: black;
+  font-family: '"Roboto","Helvetica","Arial",sans-serif';
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}

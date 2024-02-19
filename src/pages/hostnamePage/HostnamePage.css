@@ -2,8 +2,16 @@
     display: flex;
     align-items: center;
 }
-.inputSize {
+
+.textfield-type1 {
     width: 200px;
-    height: 40px;
-    box-sizing: border-box;
+}
+
+.margin5px {
+    margin-top: 10px;
+}
+
+.submit-Button {
+    margin-Top: 30px;
+    /*margin-bottom: 60px;*/
 }
