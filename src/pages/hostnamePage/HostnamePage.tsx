@@ -1,13 +1,20 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import {Button, ButtonGroup, CircularProgress, Modal, Stack} from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@mui/material/TextField';
 import './HostnamePage.css';
+import ParentsModal from "../../components/modal/ParentsModal";
 
 const HostnamePage = () => {
 
     const [hostName, setHostName] = useState('');
     const [loading, setLoading] = useState(true);
+    const [modalOpen, setModalOpen] = useState(false);
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
 
     useEffect(() => {
         fetchHostName();
@@ -27,35 +34,11 @@ const HostnamePage = () => {
         }
     };
 
-    const openModal = () => {
-        alert("confirm창 하나 만들기");
-    };
-
-    // fetch('http://ip.jsontest.com/').then(async function (response) {
-    //     const data = await response.json();
-    //     setHostName(data.ip);
-    // });
-
-    // TODO
-    // 해당 페이지 렌더링 될 때 서버 호출해서 현재 호스트네임 받아온다.
-    // axios, ajax, fetch
-    // 3개를 호출할때 어디 url 로 어떻게 호출할지는 정호매니저님이랑 얘기
-    //$nst.is('gethostname' ,function (res) {
-    // console.log(res) -> hostname 이 나와있을거임.
-    // })
-
-    // todo useEffect 를 사용해서 해봐라~
-
+    //todo
     // 호스트네임페이지를 클릭할때마다 지금은 서버를 호출
     // 사실 호스트네임이란건 바뀔게없잖아요
     // 이런것도 로컬스토리지에 넣어놓는다던가
     // 캐시화를 해야된다.
-
-    // 로딩페이지 넣어야 함!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-    //아래와 같은 가짜 데이터 호출 사이트를 사용하여 테스트하기
-
 
     return (
 
@@ -98,8 +81,9 @@ const HostnamePage = () => {
                             />
                         </div>
                         <div className="submit-Button">
-                            <Button variant="contained" onClick={openModal} sx={{width: 500, height: 40}}>Submit</Button>
+                            <Button variant="contained" onClick={handleOpenModal} sx={{ width: 500, height: 40 }}>Submit</Button>
                         </div>
+                        <ParentsModal open={modalOpen} onClose={handleCloseModal} modalTitle="hostname이 성공적으로 변경되었습니다." modalContent="확인"/>
                     </>
                 )}
 
@@ -108,8 +92,6 @@ const HostnamePage = () => {
         </div>
 
     );
-    // Submit 버튼 클릭 시 재시작할 건지 묻기
-    // hostname 적용하려면 재시작 해야함
 }
 
 export default HostnamePage;

@@ -1,6 +1,5 @@
-import {Box, Button, Modal } from "@mui/material";
+import {Box, Button, Modal} from "@mui/material";
 import React from "react";
-
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -15,7 +14,8 @@ const style = {
     px: 4,
     pb: 3,
 };
-const ChildModal = ({ onClose }: { onClose: () => void }) => {
+
+function ChildModal({onClose}: { onClose: () => void }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -34,7 +34,7 @@ const ChildModal = ({ onClose }: { onClose: () => void }) => {
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
             >
-                <Box sx={{ ...style, width: 200 }}>
+                <Box sx={{...style, width: 200}}>
                     <h2 id="child-modal-title">재시작 ㄱㄱ?</h2>
                     <p id="child-modal-description">
                         재시작을 해야 변경됨
@@ -47,7 +47,8 @@ const ChildModal = ({ onClose }: { onClose: () => void }) => {
     );
 }
 
-const IpPage = () => {
+const ParentsModal = () => {
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -60,22 +61,19 @@ const IpPage = () => {
     };
     return (
         <>
-            <h1>Ip</h1>
-            <div>고정ip로 바꾸는 것도 있으면 좋을 수도</div>
 
-            <Button onClick={handleOpen}>변경하기</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="parent-modal-title"
                 aria-describedby="parent-modal-description"
             >
-                <Box sx={{ ...style, width: 400 }}>
+                <Box sx={{...style, width: 400}}>
                     <h2 id="parent-modal-title">hostname이 성공적으로 변경되었습니다.</h2>
                     <p id="parent-modal-description">
                         192.168.10.91 -&gt;  192.168.10.92
                     </p>
-                    <ChildModal onClose={handleCloseAll} />
+                    <ChildModal onClose={handleCloseAll}/>
                 </Box>
             </Modal>
         </>
@@ -83,4 +81,4 @@ const IpPage = () => {
     );
 }
 
-export default IpPage;
+export {ParentsModal};
