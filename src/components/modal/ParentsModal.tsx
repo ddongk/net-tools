@@ -44,7 +44,7 @@ const ParentsModal: React.FC<{ open: boolean; onClose: () => void; modalTitle: s
                 <p id="parent-modal-description">
                     192.168.10.91 -&gt;  192.168.10.92
                 </p>
-                <Button onClick={handleChildModalOpen}></Button>
+                <Button onClick={handleChildModalOpen}>{modalContent}</Button>
                 <ChildModal open={childModalOpen} onClose={handleChildModalClose} onNoClick={handleNoClick} />
             </Box>
         </Modal>
