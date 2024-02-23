@@ -3,13 +3,17 @@ import {Button, ButtonGroup, CircularProgress, Modal, Stack} from "@mui/material
 import TextField from '@mui/material/TextField';
 import './HostnamePage.css';
 import ParentsModal from "../../components/modal/ParentsModal";
+import {defaultUrl} from "../../utils/common";
 
 const HostnamePage = () => {
 
     const [hostName, setHostName] = useState('');
+    const [submitHostName, setSubmitHostName] = useState('local-');
     const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
     const handleOpenModal = () => {
+        fetchHostName();
+        setFetchHostName();
         setModalOpen(true);
     };
     const handleCloseModal = () => {
@@ -22,17 +26,41 @@ const HostnamePage = () => {
 
     const fetchHostName = async () => {
         try {
-            const response = await fetch('http://ip.jsontest.com/');
+            const response = await fetch('http://ip.jsontest.com/');//테스트용
+            // const response = await fetch(`${defaultUrl}/getHostName`);
             const data = await response.json();
-            setHostName(data.ip);
+            setHostName(data.hostname);
         } catch (error) {
             console.error('에러: ', error);
             //호출 실패 시 알림 문구창 뜨게도 하면 좋을 듯
         } finally {
             setLoading(false);
-            //호출 성공 시 알림 문구창 뜨게도 하면 좋을 듯
+            // 로딩
+            // 호출 성공 시 알림 문구창 뜨게도 하면 좋을 듯
+            // -> 이건 없어도 될듯. 호출 실패 시만 ㄱㄱ
         }
     };
+
+    const setFetchHostName = async () => {
+        console.log(submitHostName);
+        try {
+            const response = await fetch(`${defaultUrl}/setHostName`, {
+                method : 'POST',
+                body : JSON.stringify({
+                    hostname : submitHostName
+                })
+            });
+            const data = await response.json();
+        } catch (error) {
+            console.error('에러: ', error);
+            //호출 실패 시 알림 문구창 뜨게도 하면 좋을 듯
+        } finally {
+            setLoading(false);
+            // 로딩
+            // 호출 성공 시 알림 문구창 뜨게도 하면 좋을 듯
+            // -> 이건 없어도 될듯. 호출 실패 시만 ㄱㄱ
+        }
+    }
 
     //todo
     // 호스트네임페이지를 클릭할때마다 지금은 서버를 호출
@@ -77,13 +105,17 @@ const HostnamePage = () => {
                                 className="textfield-type1"
                                 label="Set the new hostname"
                                 placeholder="Enter the hostname"
+                                defaultValue={submitHostName}
+                                onChange={(event: any) => {
+                                    setSubmitHostName(event.target.value);
+                                }}
                                 sx={{ width: 500 }}
                             />
                         </div>
                         <div className="submit-Button">
                             <Button variant="contained" onClick={handleOpenModal} sx={{ width: 500, height: 40 }}>Submit</Button>
                         </div>
-                        <ParentsModal open={modalOpen} onClose={handleCloseModal} modalTitle="hostname이 성공적으로 변경되었습니다." modalContent="확인"/>
+                        <ParentsModal open={modalOpen} onClose={handleCloseModal} modalTitle="hostname이 성공적으로 변경되었습니다." modalContent="192.168.10.91 -&gt;  192.168.10.92" childModal={true}/>
                     </>
                 )}
 

@@ -15,12 +15,23 @@ const style = {
     px: 4,
     pb: 3,
 };
+interface PortProxyModalProps {
+    open: boolean;
+    onClose: () => void;
+    modalTitle: string;
+    modalContent?: string;
+    childModal?: boolean;
+}
 
-const ParentsModal: React.FC<{ open: boolean; onClose: () => void; modalTitle: string; modalContent: string }> = ({ open, onClose, modalTitle, modalContent}) => {
+const ParentsModal: React.FC<PortProxyModalProps> = ({ open, onClose, modalTitle, modalContent,childModal}) => {
     const [childModalOpen, setChildModalOpen] = useState(false);
 
     const handleChildModalOpen = () => {
-        setChildModalOpen(true);
+        if (childModal == true) {
+            setChildModalOpen(true);
+        } else {
+            onClose();
+        }
     };
 
     const handleChildModalClose = () => {
@@ -42,9 +53,9 @@ const ParentsModal: React.FC<{ open: boolean; onClose: () => void; modalTitle: s
             <Box sx={{ ...style, width: 400 }}>
                 <h2 id="parent-modal-title">{modalTitle}</h2>
                 <p id="parent-modal-description">
-                    192.168.10.91 -&gt;  192.168.10.92
+                    {modalContent}
                 </p>
-                <Button onClick={handleChildModalOpen}>{modalContent}</Button>
+                <Button onClick={handleChildModalOpen}>확인</Button>
                 <ChildModal open={childModalOpen} onClose={handleChildModalClose} onNoClick={handleNoClick} />
             </Box>
         </Modal>

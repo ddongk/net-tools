@@ -1,0 +1,1 @@
+export const defaultUrl = `http://192.168.10.93:3000/api/v1`;
