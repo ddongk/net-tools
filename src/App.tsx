@@ -1,29 +1,38 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import HostnamePage from "./pages/hostnamePage/HostnamePage";
 import IpPage from "./pages/ipPage/IpPage";
 import './App.css';
 import {BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate} from "react-router-dom";
-import NavigateButton from "./components/button/NavigateButton";
 import PortproxyPage from "./pages/portproxyPage/PortproxyPage";
 import ModifyPortproxyPage from "./pages/portproxyPage/ModifyPortproxyPage";
-import Button from "@mui/material";
+import {IconButton} from '@mui/material';
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from '@mui/icons-material/Menu';
 
 function App() {
-    const location = useLocation();
 
-    // React.useEffect(() => {
-    //     if (location.pathname === '/') {
-    //         window.location.href = '/pages/hostnamePage/HostnamePage';
-    //     }
-    // }, [location]);
-
+    const [sideMenu, setSideMenu] = useState(false);
+    const navigate = useNavigate();
+    const [title, setTitle] = useState('hostname');
+    const handleOpenSideMenu = () => {
+        setSideMenu(true);
+    }
+    const handleCloseSideMenu = () => {
+        setSideMenu(false);
+    }
+    useEffect(() => {
+        setTitle('hostname');
+    }, []);
     return (
         <div className="div-center">
             <div>
-                {/*<div style={{ textAlign: 'center' }}>*/}
-                {/*    <img src="/images/logo-unipost-800x400.png" style={{ width: '130px', height: 'auto' }}/>*/}
-
-                {/*</div>*/}
+                <div className="titleNmenu">
+                    <div className="titleText">{title}</div>
+                    <div className="menuBtn"><IconButton onClick={handleOpenSideMenu}><MenuIcon/></IconButton></div>
+                </div>
                 <div>
                     <Routes>
                         <Route path="/" element={<Navigate to="/pages/hostnamePage/HostnamePage"/>}/>
@@ -36,9 +45,32 @@ function App() {
                 </div>
             </div>
             <div className="menu-bar">
-                <NavigateButton variant="outlined" buttonText="Hostname" path="/pages/hostnamePage/HostnamePage"/>
-                <NavigateButton variant="outlined" buttonText="Ip" path="/pages/ipPage/IpPage"/>
-                <NavigateButton variant="outlined" buttonText="Portproxy" path="/pages/portproxyPage/PortproxyPage"/>
+                {/*<IconButton onClick={handleOpenSideMenu}><MenuIcon/></IconButton>*/}
+                <Drawer anchor="right" open={sideMenu} onClose={handleCloseSideMenu}>
+                    <List>
+                        <ListItem button onClick={() => {
+                            navigate("/pages/hostnamePage/HostnamePage");
+                            handleCloseSideMenu();
+                            setTitle('hostname');
+                        }}>
+                            <ListItemText primary="Hostname"/>
+                        </ListItem>
+                        <ListItem button onClick={() => {
+                            navigate("/pages/ipPage/IpPage");
+                            handleCloseSideMenu();
+                            setTitle('ip');
+                        }}>
+                            <ListItemText primary="Ip"/>
+                        </ListItem>
+                        <ListItem button onClick={() => {
+                            navigate("/pages/portproxyPage/PortproxyPage");
+                            handleCloseSideMenu();
+                            setTitle('portproxy');
+                        }}>
+                            <ListItemText primary="Portproxy"/>
+                        </ListItem>
+                    </List>
+                </Drawer>
             </div>
         </div>
     );

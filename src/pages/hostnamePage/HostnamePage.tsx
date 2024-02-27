@@ -1,5 +1,5 @@
-import React, {ReactNode, useEffect, useState} from "react";
-import {Button, ButtonGroup, CircularProgress, Modal, Stack} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Button, CircularProgress, Modal, Stack} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import './HostnamePage.css';
 import ParentsModal from "../../components/modal/ParentsModal";
@@ -82,10 +82,7 @@ const HostnamePage = () => {
                     </div>
                     </>
                 ) : (
-                    <>
-                        <div className="title">
-                            hostname
-                        </div>
+                    <div className="hostnameCenter">
                         <div className="margin5px">
                             <TextField
                                 id="outlined-read-only-input"
@@ -116,7 +113,7 @@ const HostnamePage = () => {
                             <Button variant="contained" onClick={handleOpenModal} sx={{ width: 500, height: 40 }}>Submit</Button>
                         </div>
                         <ParentsModal open={modalOpen} onClose={handleCloseModal} modalTitle="hostname이 성공적으로 변경되었습니다." modalContent="192.168.10.91 -&gt;  192.168.10.92" childModal={true}/>
-                    </>
+                    </div>
                 )}
 
             </div>

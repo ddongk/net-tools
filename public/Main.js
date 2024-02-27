@@ -5,7 +5,7 @@ const url = require('url');
 function createWindow() {
 
     const win = new BrowserWindow({
-        width:900,
+        width:690,
         height:500,
         frame: true,
         resizable: false

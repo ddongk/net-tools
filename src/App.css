@@ -1,51 +1,81 @@
+.titleNmenu {
+    /*border: solid 1px black;*/
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    width: 632px;
+    display: flex;
+
+}
+
+.titleText {
+    flex: 1;
+    padding-left: 70px;
+}
+
+.menuBtn {
+    margin-right: 13px;
+}
+
 .div-center {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
-.menu-bar{
-  display: flex;
-  flex-direction: column;
+
+.menuBtn {
+
 }
+
+.menu-bar {
+    display: flex;
+    flex-direction: column;
+}
+
 .menu-bar .MuiButton-root {
-  transition: background-color 0.3s;
+    transition: background-color 0.3s;
 }
 
 .menu-bar .MuiButton-root:hover {
-  background-color: #3f51b5; /* 변경할 색상 */
-  color: white; /* 변경할 텍스트 색상 */
+    background-color: #3f51b5; /* 변경할 색상 */
+    color: white; /* 변경할 텍스트 색상 */
 }
+
 .pageFrame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: solid 1px black;
-  width: 700px;
-  /*height: 350px;*/
-  /*overflow: auto;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    /*border: solid 1px black;*/
+    width: 630px;
+    height: 372px;
+    /*overflow: auto;*/
 }
 
 .title {
-  color: black;
-  font-family: '"Roboto","Helvetica","Arial",sans-serif';
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 50px;
+    color: black;
+    font-family: '"Roboto","Helvetica","Arial",sans-serif';
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 60px;
+}
+
+.hostnameCenter {
+    margin-top: 80px;
 }
 
 .modalForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  background-color: #ffffff;
-  border: 2px solid #000;
-  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.25);
-  padding-top: 2px;
-  padding-right: 4px;
-  padding-bottom: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #ffffff;
+    border: 2px solid #000;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.25);
+    padding-top: 2px;
+    padding-right: 4px;
+    padding-bottom: 3px;
 }
