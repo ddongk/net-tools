@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Modal, Box, Button } from "@mui/material";
+import React, {useState} from "react";
+import {Modal, Box, Button} from "@mui/material";
 import {defaultUrl} from "../../utils/common";
 import TextField from "@mui/material/TextField";
 
-interface CreatePortProxyData {
-    createListenAddress: String;
-    createListenPort: String;
-    createConnectAddress: String;
-    createConnectPort: String;
+interface PortProxyData {
+    listenAddress: String;
+    listenPort: String;
+    connectAddress: String;
+    connectPort: String;
 }
 
 interface PortProxyModalProps {
@@ -31,15 +31,36 @@ const style = {
     pb: 3,
 };
 
-const PortProxyModal: React.FC<PortProxyModalProps> = ({ open, onClose, modalTitle, modalContent}) => {
+const PortProxyModal: React.FC<PortProxyModalProps> = ({open, onClose, modalTitle, modalContent}) => {
 
-    const [newPortProxyData, setNewPortProxyData] = useState<CreatePortProxyData[]>([]);
+    const [newPortProxyData, setNewPortProxyData] = useState<PortProxyData>({
+        listenAddress: '',
+        listenPort: '',
+        connectAddress: '',
+        connectPort: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+        setNewPortProxyData({
+            ...newPortProxyData,
+            [field]: e.target.value
+        });
+    }
 
 
     const submitPortProxy = async () => {
-        
+        const dataArray = [{
+            listenAddress: newPortProxyData.listenAddress,
+            listenPort: newPortProxyData.listenPort,
+            connectAddress: newPortProxyData.connectAddress,
+            connectPort: newPortProxyData.connectPort
+        }]
+        console.log(JSON.stringify(dataArray));
+        // 실제로 보낼 때는 console.log(dataArray); 라고 보내야 함
+
+        //
         onClose();// 임시용도
-        
+
         try {
 
             const response = await fetch(`${defaultUrl}/setPortProxy`, {
@@ -66,69 +87,65 @@ const PortProxyModal: React.FC<PortProxyModalProps> = ({ open, onClose, modalTit
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
         >
-            <Box sx={{ ...style, width: 500 }}>
+            <Box sx={{...style, width: 500}}>
                 <h2 id="parent-modal-title">{modalTitle}</h2>
                 <p id="parent-modal-description">
                     {modalContent}
                 </p>
                 <div className="margin5px">
-                <TextField
-                    required
-                    id="outlined-required"
-                    className="textfield-type1"
-                    label="listenAddress"
-                    placeholder="Enter the hostname"
-                    defaultValue=""
-                    onChange={(event: any) => {
-                        setNewPortProxyData(event.target.value);
-                    }}
-                    sx={{ width: 500 }}
-                />
+                    <TextField
+                        required
+                        id="outlined-required"
+                        className="textfield-type1"
+                        label="listenAddress"
+                        placeholder="Enter the hostname"
+                        defaultValue=""
+                        value={newPortProxyData.listenAddress}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, 'listenAddress')}
+                        sx={{width: 500}}
+                    />
                 </div>
                 <div className="margin5px">
-                <TextField
-                    required
-                    id="outlined-required"
-                    className="textfield-type1"
-                    label="listenPort"
-                    placeholder="Enter the hostname"
-                    defaultValue=""
-                    onChange={(event: any) => {
-                        setNewPortProxyData(event.target.value);
-                    }}
-                    sx={{ width: 500 }}
-                />
+                    <TextField
+                        required
+                        id="outlined-required"
+                        className="textfield-type1"
+                        label="listenPort"
+                        placeholder="Enter the hostname"
+                        defaultValue=""
+                        value={newPortProxyData.listenPort}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, 'listenPort')}
+                        sx={{width: 500}}
+                    />
                 </div>
                 <div className="margin5px">
-                <TextField
-                    required
-                    id="outlined-required"
-                    className="textfield-type1"
-                    label="connectAddress"
-                    placeholder="Enter the hostname"
-                    defaultValue=""
-                    onChange={(event: any) => {
-                        setNewPortProxyData(event.target.value);
-                    }}
-                    sx={{ width: 500 }}
-                />
+                    <TextField
+                        required
+                        id="outlined-required"
+                        className="textfield-type1"
+                        label="connectAddress"
+                        placeholder="Enter the hostname"
+                        defaultValue=""
+                        value={newPortProxyData.connectAddress}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, 'connectAddress')}
+                        sx={{width: 500}}
+                    />
                 </div>
                 <div className="margin5px">
-                <TextField
-                    required
-                    id="outlined-required"
-                    className="textfield-type1"
-                    label="connectPort"
-                    placeholder="Enter the hostname"
-                    defaultValue=""
-                    onChange={(event: any) => {
-                        setNewPortProxyData(event.target.value);
-                    }}
-                    sx={{ width: 500 }}
-                />
+                    <TextField
+                        required
+                        id="outlined-required"
+                        className="textfield-type1"
+                        label="connectPort"
+                        placeholder="Enter the hostname"
+                        defaultValue=""
+                        value={newPortProxyData.connectPort}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, 'connectPort')}
+                        sx={{width: 500}}
+                    />
                 </div>
                 <div className="submit-Button">
-                <Button variant="contained" onClick={submitPortProxy} sx={{ width: 500, height: 40 }}>확인</Button>
+                    <Button variant="contained" onClick={submitPortProxy} sx={{width: 500, height: 40}}>확인</Button>
                 </div>
             </Box>
         </Modal>

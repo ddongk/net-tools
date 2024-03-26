@@ -1,13 +1,18 @@
-import {Box, Button, Modal } from "@mui/material";
+import {Box, Button, CircularProgress, Modal} from "@mui/material";
 import React from "react";
 
 const IpPage = () => {
     return (
-        <>
-            <div>고정ip로 바꾸는 것도 있으면 좋을 수도</div>
-
-            서브넷마스크
-        </>
+        <div className="pageFrame">
+            <div>
+                <div className="loadingImage_unipost">
+                    <img src="/images/logo-unipost-800x400.png" style={{width: '130px', height: 'auto'}}/>
+                </div>
+                <div className="loadingImage_circle">
+                    <CircularProgress/>
+                </div>
+            </div>
+        </div>
 
     );
 }

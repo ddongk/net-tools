@@ -45,9 +45,9 @@ const HostnamePage = () => {
         console.log(submitHostName);
         try {
             const response = await fetch(`${defaultUrl}/setHostName`, {
-                method : 'POST',
-                body : JSON.stringify({
-                    hostname : submitHostName
+                method: 'POST',
+                body: JSON.stringify({
+                    hostname: submitHostName
                 })
             });
             const data = await response.json();
@@ -62,24 +62,28 @@ const HostnamePage = () => {
         }
     }
 
-    //todo
+    //todo 1
     // 호스트네임페이지를 클릭할때마다 지금은 서버를 호출
     // 사실 호스트네임이란건 바뀔게없잖아요
     // 이런것도 로컬스토리지에 넣어놓는다던가
     // 캐시화를 해야된다.
 
+
+    //todo 2
+    // 페이지 새로 고침 시 hostname으로 바뀜
+
     return (
 
         <div className="pageFrame">
             <div>
-                {loading ? (<>
-                    <div>
-                    <img src="/images/logo-unipost-800x400.png" style={{ width: '130px', height: 'auto' }}/>
-                    </div>
-                        중앙 맞춰야 함
-                    <div>
-                        <CircularProgress />
-                    </div>
+                {loading ? (
+                    <>
+                        <div className="loadingImage_unipost">
+                            <img src="/images/logo-unipost-800x400.png" style={{width: '130px', height: 'auto'}}/>
+                        </div>
+                        <div className="loadingImage_circle">
+                            <CircularProgress/>
+                        </div>
                     </>
                 ) : (
                     <div className="hostnameCenter">
@@ -92,7 +96,7 @@ const HostnamePage = () => {
                                 InputProps={{
                                     readOnly: true,
                                 }}
-                                sx={{ width: 500 }}
+                                sx={{width: 500}}
                             />
                         </div>
                         <div className="margin5px">
@@ -106,13 +110,15 @@ const HostnamePage = () => {
                                 onChange={(event: any) => {
                                     setSubmitHostName(event.target.value);
                                 }}
-                                sx={{ width: 500 }}
+                                sx={{width: 500}}
                             />
                         </div>
                         <div className="submit-Button">
-                            <Button variant="contained" onClick={handleOpenModal} sx={{ width: 500, height: 40 }}>Submit</Button>
+                            <Button variant="contained" onClick={handleOpenModal}
+                                    sx={{width: 500, height: 40}}>Submit</Button>
                         </div>
-                        <ParentsModal open={modalOpen} onClose={handleCloseModal} modalTitle="hostname이 성공적으로 변경되었습니다." modalContent="192.168.10.91 -&gt;  192.168.10.92" childModal={true}/>
+                        <ParentsModal open={modalOpen} onClose={handleCloseModal} modalTitle="hostname이 성공적으로 변경되었습니다."
+                                      modalContent="192.168.10.91 -&gt;  192.168.10.92" childModal={true}/>
                     </div>
                 )}
 

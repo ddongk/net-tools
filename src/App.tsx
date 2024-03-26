@@ -33,7 +33,7 @@ function App() {
                     <div className="titleText">{title}</div>
                     <div className="menuBtn"><IconButton onClick={handleOpenSideMenu}><MenuIcon/></IconButton></div>
                 </div>
-                <div>
+                <div className="App" style={{ fontFamily: 'KCCMurukmuruk' }}>
                     <Routes>
                         <Route path="/" element={<Navigate to="/pages/hostnamePage/HostnamePage"/>}/>
                         <Route path="*" element={<Navigate to="/pages/hostnamePage/HostnamePage"/>}/>

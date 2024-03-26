@@ -27,19 +27,29 @@ const PortproxyPage = () => {
     const [portProxy, setPortProxy] = useState<PortProxyData[]>([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const handleOpenModal = () => {
-        setModalOpen(true);
-    };
-    const handleCloseModal = () => {
-        setModalOpen(false);
-    };
+    const [selecttedRows, setSelectedRows] = useState([]);
+
+    const handleOpenModal = () => setModalOpen(true);
+    const handleCloseModal = () => setModalOpen(false);
 
     const handleOpenDelModal = () => {
+
+        const selectedRowsData = selecttedRows.map(selectedRowId => { //selectedRowId: 체크한 열 id 값
+            //todo
+            // 배열 받아서 보내기
+            // 여기 말고 다른 함수로 이동 ㄱㄱ
+            return portProxy.find(row => row.id === selectedRowId);
+        });
+        console.log("Selected Rows Data[][][][]: ", selectedRowsData);
+
+
+        //이거만 냅기면 됨
         setDeleteModalOpen(true);
-    };
-    const handleCloseDelModal = () => {
-        setDeleteModalOpen(false);
-    };
+    }
+    const handleCloseDelModal = () => setDeleteModalOpen(false);
+    const handleGetSelectedValues = (newSelection: any) => {
+        setSelectedRows(newSelection);
+    }
 
     useEffect(() => {
         fetchPortProxy();
@@ -74,17 +84,17 @@ const PortproxyPage = () => {
                 const dataWithID = data.RealtimeCityAir.row.map((row: PortProxyData, index: number) => ({
                     ...row,
                     id: index + 1
-                    }));
-                    setPortProxy(dataWithID);
-                } catch (error) {
-                    console.error('에러: ', error);
-                    //호출 실패 시 알림 문구창 뜨게도 하면 좋을 듯
-                } finally {
-                    // 로딩
-                    // 호출 성공 시 알림 문구창 뜨게도 하면 좋을 듯
-                    // -> 이건 없어도 될듯. 호출 실패 시만 ㄱㄱ
-                }
-            };
+                }));
+                setPortProxy(dataWithID);
+            } catch (error) {
+                console.error('에러: ', error);
+                //호출 실패 시 알림 문구창 뜨게도 하면 좋을 듯
+            } finally {
+                // 로딩
+                // 호출 성공 시 알림 문구창 뜨게도 하면 좋을 듯
+                // -> 이건 없어도 될듯. 호출 실패 시만 ㄱㄱ
+            }
+        };
 
 
     /** 복구 예정*/
@@ -102,39 +112,40 @@ const PortproxyPage = () => {
             {field: 'O3', headerName: 'connectPort', type: 'number', width: 120},
         ];
 
-            return (
-                <div className="pageFrame">
-                    <div className="portproxyDELnADD">
-                        <Fab color="secondary" aria-label="delete" onClick={handleOpenDelModal}
-                             sx={{width: '40px', height: '40px'}}>
-                            <DeleteIcon/>
-                        </Fab>
-                        <Fab color="primary" aria-label="add" onClick={handleOpenModal} sx={{width: '40px', height: '40px'}}>
-                            <AddIcon/>
-                        </Fab>
-                    </div>
-                    <div className="data-grid-container">
-                        <DataGrid
-                            rows={portProxy}
-                            rowHeight={40}
-                            columns={columns}
-                            style={{width: '600px'}}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {page: 0, pageSize: 5},
-                                }
-                            }}
-                            checkboxSelection
-                        />
-                    </div>
-                    <div>
-                        <PortProxyModal open={modalOpen} onClose={handleCloseModal} modalTitle="portproxy 변!경!"
-                                        modalContent=""/>
-                        <ParentsModal open={deleteModalOpen} onClose={handleCloseDelModal} modalTitle="portproxy 삭?제?"
-                                      modalContent="00 12312  213 124 를 삭제하시겠습니까~~?" childModal={false}/>
-                    </div>
-                </div>
-            );
-        };
+    return (
+        <div className="pageFrame">
+            <div className="portproxyDELnADD">
+                <Fab color="secondary" aria-label="delete" onClick={handleOpenDelModal}
+                     sx={{width: '40px', height: '40px'}}>
+                    <DeleteIcon/>
+                </Fab>
+                <Fab color="primary" aria-label="add" onClick={handleOpenModal} sx={{width: '40px', height: '40px'}}>
+                    <AddIcon/>
+                </Fab>
+            </div>
+            <div className="data-grid-container">
+                <DataGrid
+                    rows={portProxy}
+                    rowHeight={40}
+                    columns={columns}
+                    style={{width: '600px'}}
+                    initialState={{
+                        pagination: {
+                            paginationModel: {page: 0, pageSize: 5},
+                        }
+                    }}
+                    checkboxSelection
+                    onRowSelectionModelChange={handleGetSelectedValues}
+                />
+            </div>
+            <div>
+                <PortProxyModal open={modalOpen} onClose={handleCloseModal} modalTitle="portproxy 변!경!"
+                                modalContent=""/>
+                <ParentsModal open={deleteModalOpen} onClose={handleCloseDelModal} modalTitle="portproxy 삭?제?"
+                              modalContent="00 12312  213 124 를 삭제하시겠습니까~~?" childModal={false}/>
+            </div>
+        </div>
+    );
+};
 
-    export default PortproxyPage;
+export default PortproxyPage;

@@ -2,10 +2,11 @@
     /*border: solid 1px black;*/
     text-align: center;
     font-size: 25px;
-    font-weight: bold;
+    /*font-weight: bold;*/
     width: 632px;
     display: flex;
-
+    font-family: 'KCCMurukmuruk';
+    font-size: 65px;
 }
 
 .titleText {
@@ -78,4 +79,16 @@
     padding-top: 2px;
     padding-right: 4px;
     padding-bottom: 3px;
+}
+.loadingImage_unipost {
+    margin-top: 80px;
+    margin-left: 30px;
+}
+.loadingImage_circle {
+    margin-left: 68px;
+}
+
+@font-face {
+    font-family: 'KCCMurukmuruk';
+    src: url('../public/fonts/KCCMurukmuruk.woff2') format('woff2');
 }
